@@ -1,0 +1,431 @@
+[
+    {
+        "id": "d3727cf739bae935",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e8412540edc559ae",
+        "type": "mqtt out",
+        "z": "d3727cf739bae935",
+        "name": "",
+        "topic": "",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "0f1e86ae29075a67",
+        "x": 730,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "bdfe905e75852942",
+        "type": "inject",
+        "z": "d3727cf739bae935",
+        "name": "Temperature Trigger",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 280,
+        "y": 220,
+        "wires": [
+            [
+                "4ffbe20792394d1c"
+            ]
+        ]
+    },
+    {
+        "id": "4ffbe20792394d1c",
+        "type": "function",
+        "z": "d3727cf739bae935",
+        "name": "function 1",
+        "func": "msg.topic = \"campus/room1/data\";\nmsg.payload = {\n    temperature: Math.floor(Math.random() * 10) + 25\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 220,
+        "wires": [
+            [
+                "e8412540edc559ae"
+            ]
+        ]
+    },
+    {
+        "id": "d44d6e77961dbc0f",
+        "type": "inject",
+        "z": "d3727cf739bae935",
+        "name": "Humidity Trigger",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 270,
+        "y": 280,
+        "wires": [
+            [
+                "c4f967c74ecd9c78"
+            ]
+        ]
+    },
+    {
+        "id": "c4f967c74ecd9c78",
+        "type": "function",
+        "z": "d3727cf739bae935",
+        "name": "function 2",
+        "func": "msg.topic = \"campus/room2/data\";\nmsg.payload = {\n    humidity: Math.floor(Math.random() * 20) + 50\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 280,
+        "wires": [
+            [
+                "3fd81fd045a59a25"
+            ]
+        ]
+    },
+    {
+        "id": "3fd81fd045a59a25",
+        "type": "mqtt out",
+        "z": "d3727cf739bae935",
+        "name": "",
+        "topic": "",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "0f1e86ae29075a67",
+        "x": 730,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "49a527dde09b1025",
+        "type": "mqtt in",
+        "z": "d3727cf739bae935",
+        "name": "",
+        "topic": "campus/+/data",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "0f1e86ae29075a67",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 260,
+        "y": 460,
+        "wires": [
+            [
+                "7b7a893902eae950",
+                "628990d38c3a1f3c",
+                "f1e183a4468f7e81"
+            ]
+        ]
+    },
+    {
+        "id": "7b7a893902eae950",
+        "type": "debug",
+        "z": "d3727cf739bae935",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "628990d38c3a1f3c",
+        "type": "ui_gauge",
+        "z": "d3727cf739bae935",
+        "name": "",
+        "group": "89c7f94c537bac83",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "°C",
+        "format": "{{payload.temperature}}",
+        "min": "20",
+        "max": "40",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 510,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "ed6a9922c0f071d8",
+        "type": "ui_chart",
+        "z": "d3727cf739bae935",
+        "name": "",
+        "group": "89c7f94c537bac83",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Humidity",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "50",
+        "ymax": "70",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 740,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f1e183a4468f7e81",
+        "type": "function",
+        "z": "d3727cf739bae935",
+        "name": "function 3",
+        "func": "msg.payload = msg.payload.humidity;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 560,
+        "wires": [
+            [
+                "ed6a9922c0f071d8"
+            ]
+        ]
+    },
+    {
+        "id": "cc3a75091bac2532",
+        "type": "inject",
+        "z": "d3727cf739bae935",
+        "name": "Status Trigger",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 260,
+        "y": 340,
+        "wires": [
+            [
+                "bb480320e526acc5"
+            ]
+        ]
+    },
+    {
+        "id": "bb480320e526acc5",
+        "type": "function",
+        "z": "d3727cf739bae935",
+        "name": "function 4",
+        "func": "msg.topic = \"campus/status\";\nmsg.payload = \"System Active\";\nmsg.retain = true;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 340,
+        "wires": [
+            [
+                "e95e377d80f4c423"
+            ]
+        ]
+    },
+    {
+        "id": "e95e377d80f4c423",
+        "type": "mqtt out",
+        "z": "d3727cf739bae935",
+        "name": "",
+        "topic": "",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "0f1e86ae29075a67",
+        "x": 730,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "b852f1f6b4cf4fe7",
+        "type": "mqtt in",
+        "z": "d3727cf739bae935",
+        "name": "",
+        "topic": "campus/status",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "0f1e86ae29075a67",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 250,
+        "y": 400,
+        "wires": [
+            [
+                "4ebe30196687f1e6"
+            ]
+        ]
+    },
+    {
+        "id": "4ebe30196687f1e6",
+        "type": "debug",
+        "z": "d3727cf739bae935",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "0f1e86ae29075a67",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "test.mosquitto.org",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "89c7f94c537bac83",
+        "type": "ui_group",
+        "name": "Sensors",
+        "tab": "c986777ccc1bf76d",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "c986777ccc1bf76d",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "0e79c999bd0fb666",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]
